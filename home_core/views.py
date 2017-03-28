@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
 from home_core import serialConnection
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -29,3 +30,23 @@ def led_status(request):
     status_res = serialConnection.status()
 
     return JsonResponse({'status': status_res}, status=200)
+
+
+def get_rooms(request):
+    room = {'id': 1, 'name': 'Кухня', 'image': 'room_kitchen'}
+    rooms = [room]
+    data = {'rooms': rooms}
+    return JsonResponse(data, status=200)
+
+
+def room_detail(request, room_id):
+    sensors = serialConnection.getSensors()
+    room = {'id': 1, 'name': 'Кухня', 'image': 'room_kitchen', 'sensors': sensors}
+    data = {'room': room}
+    return JsonResponse(data, status=200)
+
+@csrf_exempt
+def set_sensor(request):
+    val = request.POST['value']
+    serialConnection.setLight(val)
+    return JsonResponse({'status': 'true'}, status=200)

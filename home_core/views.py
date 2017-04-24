@@ -3,7 +3,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from home_core import serialConnection
 from django.views.decorators.csrf import csrf_exempt
+import urllib.request
+import requests
 
+controller_url = "http://192.168.1.210:80/"
 # Create your views here.
 
 def manage_led(request, is_on):
@@ -40,7 +43,11 @@ def get_rooms(request):
 
 
 def room_detail(request, room_id):
-    sensors = serialConnection.getSensors()
+    # sensors = serialConnection.getSensors()
+    # data = urllib.request.Request(controller_url + "getall").getResponse()
+    response = requests.get(controller_url + "getall")
+    data = response.json()
+    sensors = data['sensors']
     room = {'id': 1, 'name': 'Кухня', 'image': 'room_kitchen', 'sensors': sensors}
     data = {'room': room}
     return JsonResponse(data, status=200)
@@ -48,5 +55,14 @@ def room_detail(request, room_id):
 @csrf_exempt
 def set_sensor(request):
     val = request.POST['value']
-    serialConnection.setLight(val)
+    # serialConnection.setLight(val)
+    requests.post(controller_url + "setlight", data = {'value': val})
     return JsonResponse({'status': 'true'}, status=200)
+
+
+def test(request):
+
+    host = request.get_host()
+    port = request.get_port()
+
+    return JsonResponse({'host': host, 'port': port}, status=200)

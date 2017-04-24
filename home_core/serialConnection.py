@@ -49,3 +49,51 @@ def setLight(val):
     ser.baudrate = 9600
     ser.write(str.encode(str(command)))
     ser.close()
+
+
+def sensorsData():
+    sensors = [
+     	{
+    		"id": 0,
+        	"name": "Светодиод",
+        	"type": "light",
+        	"value": 0
+    	},
+    	{
+        	"id": 1,
+        	"name": "Освещенность",
+        	"type": "illumination",
+        	"value": 32
+    	},
+    	{
+        	"id": 2,
+        	"name": "Температура",
+        	"type": "temperature",
+        	"value": 24
+     	},
+    	{
+        	"id": 3,
+        	"name": "Влажность воздуха",
+        	"type": "humidity",
+        	"value": 16
+    	},
+    	{
+        	"id": 4,
+        	"name": "Датчик протечки",
+        	"type": "water",
+        	"value": 39
+    	}
+    ]
+    return sensors
+
+
+def roomsData():
+	rooms =  [
+    	{
+      		"id": 0,
+      		"name": "Кухня",
+      		"image": "room_kitchen"
+    	}
+  	]
+
+	return rooms

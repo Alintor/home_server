@@ -59,10 +59,3 @@ def set_sensor(request):
     requests.post(controller_url + "setlight", data = {'value': val})
     return JsonResponse({'status': 'true'}, status=200)
 
-
-def test(request):
-
-    host = request.get_host()
-    port = request.get_port()
-
-    return JsonResponse({'host': host, 'port': port}, status=200)

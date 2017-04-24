@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^rooms$', views.get_rooms, name='rooms'),
     url(r'^rooms/(?P<room_id>[1-9])$', views.room_detail, name='room_detail'),
     url(r'^set_sensor$', views.set_sensor, name='set_sensor'),
-    url(r'^test$', views.test, name='test'),
 ]
